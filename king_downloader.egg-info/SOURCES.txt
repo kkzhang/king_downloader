@@ -1,0 +1,8 @@
+king_downloader/__init__.py
+king_downloader/core.py
+king_downloader/test.py
+king_downloader/utils.py
+king_downloader.egg-info/PKG-INFO
+king_downloader.egg-info/SOURCES.txt
+king_downloader.egg-info/dependency_links.txt
+king_downloader.egg-info/top_level.txt
