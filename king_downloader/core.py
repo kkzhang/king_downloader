@@ -10,7 +10,7 @@ import signal
 import traceback
 import sys
 import time
-from celery_scraper2.utils import UserAgentProvider
+from king_downloader.utils import UserAgentProvider
 
 __author__ = 'patrickz'
 
