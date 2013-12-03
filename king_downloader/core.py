@@ -8,7 +8,6 @@ import msgpack
 import requests
 import signal
 import traceback
-import sys
 import time
 from king_downloader.utils import UserAgentProvider
 
@@ -141,7 +140,7 @@ class RequestEngine:
                  each_size_from_queue = 10,
                  max_failure_allowed = -1):
         from gevent import monkey
-        monkey.patch_socket()
+        monkey.patch_all()
         self.pop_interval = pop_interval
         self.request_interval = request_interval
         self.pool = Pool(pool_size)
