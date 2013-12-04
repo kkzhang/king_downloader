@@ -218,8 +218,8 @@ class RequestEngine:
                     self.quit()
                     continue
 
-            while self.pool.free_count() == 0:
-                time.sleep(self.pop_interval)
+            #while self.pool.free_count() == 0:
+            time.sleep(self.pop_interval)
 
     def setup_user_agent_provider(self, provider):
         self.user_agent_provider = provider
