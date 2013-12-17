@@ -94,11 +94,9 @@ class RedisRequestQueue(RequestQueue):
         return data
 
     def push(self, *request_item_objects):
-        print 'in push before'
         p = self.rd.pipeline()
         [p.lpush(self.queue_name, i.to_msgpack()) for i in request_item_objects]
         r = p.execute()
-        print 'in push after ' + str(r)
         return r
 
     def clear(self):
