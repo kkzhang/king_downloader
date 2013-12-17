@@ -326,4 +326,4 @@ class RequestEngine:
                 if not is_failure_set:
                     self._request_failure += 1
                     is_failure_set = True
-                logger.error("Exception while after hook execution: "+ traceback.format_exc())
+                logger.error("Exception while after hook execution", exc_info=True)
