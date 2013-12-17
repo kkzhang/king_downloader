@@ -95,7 +95,7 @@ class RedisRequestQueue(RequestQueue):
 
     def push(self, *request_item_objects):
         p = self.rd.pipeline()
-        [self.rd.lpush(self.queue_name, i.to_msgpack()) for i in request_item_objects]
+        [p.lpush(self.queue_name, i.to_msgpack()) for i in request_item_objects]
         r = p.execute()
         return r
 
