@@ -206,7 +206,7 @@ class RequestEngine:
                 continue
 
             reqs = self.request_queue.pop(self.each_size_from_queue)
-            logger.info('Current workers: '+str(self.pool.free_count()))
+            logger.info('Current free workers: '+str(self.pool.free_count()))
             if (reqs is not None) and (len(reqs) > 0):
 
                 for i in reqs:
