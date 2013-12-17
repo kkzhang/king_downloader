@@ -206,9 +206,12 @@ class RequestEngine:
                 continue
 
             reqs = self.request_queue.pop(self.each_size_from_queue)
+            logger.info('Current workers: '+str(self.pool.free_count()))
             if (reqs is not None) and (len(reqs) > 0):
 
                 for i in reqs:
+                    while self.pool.free_count() < self.each_size_from_queue:
+                        time.sleep(self.request_interval)
                     self.pool.spawn(self._make_requests, request=i, override = override_req_args)
                     time.sleep(self.request_interval)
             else:
