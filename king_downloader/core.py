@@ -297,10 +297,10 @@ class RequestEngine:
                 logger.debug("Making request... (%s)" % str(request.kwargs))
                 _timeout =  getattr(request.raw_info,'_timeout',self.request_timeout)
                 logger.debug("Timeout setting: %s" % _timeout)
-                with gevent.Timeout(_timeout):
-                    ar = requests.request(**request.kwargs)
-                    ar.raw_info = request.raw_info
-                    result = True
+                # with gevent.Timeout(_timeout):
+                ar = requests.request(**request.kwargs)
+                ar.raw_info = request.raw_info
+                result = True
                 # if result is False:
                 #     raise Exception("Request timeout (%s)" % self.request_timeout)
             except:
