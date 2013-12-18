@@ -21,7 +21,7 @@ class RequestItem:
     def __init__(self, method=None, url=None, load=None, processors=None, raw_info = None, **kwargs):
         if load is not None:
             self.kwargs = msgpack.unpackb(load)
-            self.raw_info = self.kwargs.pop('raw_info', None)
+            self.raw_info = self.kwargs.pop('raw_info', {})
             self.processors = self.kwargs.pop('processors', None)
         else:
             kwargs.update({
