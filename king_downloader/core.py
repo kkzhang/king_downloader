@@ -214,7 +214,6 @@ class RequestEngine:
                         logger.debug('Waiting to spawn new requests [free: '+self.pool.free_count()+']')
                         time.sleep(self.request_interval)
                     self.pool.spawn(self._make_requests, request=i, override = override_req_args)
-                    time.sleep(self.request_interval)
             else:
                 empty_count +=1
                 if (self.max_empty_retry != -1 and empty_count >= self.max_empty_retry):
