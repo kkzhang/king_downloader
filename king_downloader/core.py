@@ -205,21 +205,25 @@ class RequestEngine:
                 self.quit()
                 continue
 
-            reqs = self.request_queue.pop(self.each_size_from_queue)
-            logger.info('Current free workers: '+str(self.pool.free_count()))
-            if (reqs is not None) and (len(reqs) > 0):
-
-                for i in reqs:
-                    while self.pool.free_count() < self.each_size_from_queue:
-                        logger.debug('Waiting to spawn new requests [free: '+str(self.pool.free_count())+']')
-                        time.sleep(self.request_interval)
-                    self.pool.spawn(self._make_requests, request=i, override = override_req_args)
+            if self.pool.free_count() > self.each_size_from_queue:
+                this_time_size = self.each_size_from_queue
             else:
-                empty_count +=1
-                if (self.max_empty_retry != -1 and empty_count >= self.max_empty_retry):
-                    logger.warning( "Exceed Max Empty. Engine Stopping ..." )
-                    self.quit()
-                    continue
+                this_time_size = self.pool.free_count()
+
+            if this_time_size > 0:
+                reqs = self.request_queue.pop(this_time_size)
+                logger.info('Current free workers: '+str(self.pool.free_count()))
+                if (reqs is not None) and (len(reqs) > 0):
+
+                    for i in reqs:
+                        self.pool.spawn(self._make_requests, request=i, override = override_req_args)
+                        time.sleep(self.request_interval)
+                else:
+                    empty_count +=1
+                    if (self.max_empty_retry != -1 and empty_count >= self.max_empty_retry):
+                        logger.warning( "Exceed Max Empty. Engine Stopping ..." )
+                        self.quit()
+                        continue
 
             #while self.pool.free_count() == 0:
             time.sleep(self.pop_interval)
